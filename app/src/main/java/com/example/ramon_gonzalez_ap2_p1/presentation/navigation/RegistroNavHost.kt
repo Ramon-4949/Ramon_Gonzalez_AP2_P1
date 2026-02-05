@@ -5,13 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.serialization.Serializable
+import androidx.navigation.toRoute
+import com.example.ramon_gonzalez_ap2_p1.presentation.navigation.Screen
 
-@Serializable
-object ListScreenRoute
-
-@Serializable
-object EditScreenRoute
 
 @Composable
 fun RegistroNavHost(
@@ -19,17 +15,18 @@ fun RegistroNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ListScreenRoute
+        startDestination = Screen.BorrameList
     ) {
-        composable<ListScreenRoute> {
+        composable<Screen.BorrameList> {
             ListScreen(
                 onNavigateToEdit = {
-                    navController.navigate(EditScreenRoute)
+                    navController.navigate(Screen.BorrameEdit(0))
                 }
             )
         }
+        composable<Screen.BorrameEdit> { backStackEntry ->
+            val args = backStackEntry.toRoute<Screen.BorrameEdit>()
 
-        composable<EditScreenRoute> {
             EditScreen(
                 onNavigateBack = {
                     navController.navigateUp()
