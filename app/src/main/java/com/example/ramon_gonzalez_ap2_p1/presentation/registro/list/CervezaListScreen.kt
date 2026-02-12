@@ -1,7 +1,6 @@
 package com.example.ramon_gonzalez_ap2_p1.presentation.registro.list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,13 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ramon_gonzalez_ap2_p1.domain.registro.model.Cerveza
+import com.example.ramon_gonzalez_ap2_p1.ui.theme.Ramon_Gonzalez_AP2_P1Theme
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CervezaListScreen(
     onNavigateToCreate: () -> Unit,
@@ -30,6 +30,22 @@ fun CervezaListScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    CervezaListBody(
+        state = state,
+        onEvent = viewModel::onEvent,
+        onNavigateToCreate = onNavigateToCreate,
+        onNavigateToEdit = onNavigateToEdit
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CervezaListBody(
+    state: CervezaListUiState,
+    onEvent: (CervezaListUiEvent) -> Unit,
+    onNavigateToCreate: () -> Unit,
+    onNavigateToEdit: (Int) -> Unit
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text("Lista de Cervezas") })
@@ -54,7 +70,7 @@ fun CervezaListScreen(
             // Filtro
             OutlinedTextField(
                 value = state.filtro,
-                onValueChange = { viewModel.onEvent(CervezaListUiEvent.OnFilterChange(it)) },
+                onValueChange = { onEvent(CervezaListUiEvent.OnFilterChange(it)) },
                 label = { Text("Buscar por nombre") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,18 +78,35 @@ fun CervezaListScreen(
                 singleLine = true
             )
 
-            // Lista
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(state.cerveza) { item ->
-                    CervezaItem(
-                        cerveza = item,
-                        onClick = { onNavigateToEdit(item.id) },
-                        onDelete = { viewModel.onEvent(CervezaListUiEvent.OnDelete(item)) }
+            if (state.isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else if (state.cerveza.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No hay datos guardados",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(state.cerveza) { item ->
+                        CervezaItem(
+                            cerveza = item,
+                            onClick = { onNavigateToEdit(item.id) },
+                            onDelete = { onEvent(CervezaListUiEvent.OnDelete(item)) }
+                        )
+                    }
                 }
             }
         }
@@ -149,6 +182,43 @@ fun BottomTotalBar(cantidad: Int, promedio: Double) {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Lista Con Datos")
+@Composable
+fun CervezaListPreviewDatos() {
+    Ramon_Gonzalez_AP2_P1Theme {
+        CervezaListBody(
+            state = CervezaListUiState(
+                cerveza = listOf(
+                    Cerveza(1, "Presidente", "CN", 10),
+                    Cerveza(2, "Corona", "Modelo", 8)
+                ),
+                conteoTotal = 2,
+                promedioTotal = 9.0
+            ),
+            onEvent = {},
+            onNavigateToCreate = {},
+            onNavigateToEdit = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Lista Vacía (Mensaje)")
+@Composable
+fun CervezaListPreviewVacia() {
+    Ramon_Gonzalez_AP2_P1Theme {
+        CervezaListBody(
+            state = CervezaListUiState(
+                cerveza = emptyList(),
+                conteoTotal = 0,
+                promedioTotal = 0.0
+            ),
+            onEvent = {},
+            onNavigateToCreate = {},
+            onNavigateToEdit = {}
         )
     }
 }

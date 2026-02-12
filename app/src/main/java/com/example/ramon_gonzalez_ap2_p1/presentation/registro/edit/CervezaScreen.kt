@@ -12,9 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.ramon_gonzalez_ap2_p1.ui.theme.Ramon_Gonzalez_AP2_P1Theme
 
 @Composable
 fun CervezaScreen(
@@ -83,6 +85,7 @@ fun CervezaBody(
                 value = uiState.marca,
                 onValueChange = { onEvent(CervezaUiEvent.marcaChanged(it)) },
                 label = { Text("Marca") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 isError = uiState.marcaError != null,
                 supportingText = { uiState.marcaError?.let { Text(it, color = MaterialTheme.colorScheme.error) } }
             )
@@ -103,6 +106,7 @@ fun CervezaBody(
             }
 
             if (uiState.Id != 0) {
+                Spacer(modifier = Modifier.height(16.dp))
                 OutlinedButton(
                     onClick = { onEvent(CervezaUiEvent.Delete) },
                     modifier = Modifier.fillMaxWidth(),
@@ -113,5 +117,21 @@ fun CervezaBody(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CervezaEditPreview() {
+    Ramon_Gonzalez_AP2_P1Theme {
+        CervezaBody(
+            uiState = CervezaUiState(
+                nombre = "Cerveza Ejemplo",
+                marca = "Marca Demo",
+                puntuacion = "10"
+            ),
+            onEvent = {},
+            onNavigateBack = {}
+        )
     }
 }
