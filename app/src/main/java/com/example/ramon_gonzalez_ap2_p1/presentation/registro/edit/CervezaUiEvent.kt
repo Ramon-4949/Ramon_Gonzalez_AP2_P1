@@ -8,3 +8,5 @@ sealed interface CervezaUiEvent {
     data object Delete : CervezaUiEvent
 }
 
+
+

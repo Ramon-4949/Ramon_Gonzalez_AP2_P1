@@ -5,12 +5,10 @@ data class CervezaUiState(
     val nombre: String = "",
     val marca: String = "",
     val puntuacion: String = "",
-
     val nombreError: String? = null,
     val marcaError: String? = null,
     val puntuacionError: String? = null,
     val errorGeneral: String? = null,
-
     val isLoading: Boolean = false,
     val success: Boolean = false
 )
