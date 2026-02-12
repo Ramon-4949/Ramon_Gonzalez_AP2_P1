@@ -7,7 +7,7 @@ import androidx.navigation.toRoute
 import com.example.ramon_gonzalez_ap2_p1.domain.registro.model.Cerveza
 import com.example.ramon_gonzalez_ap2_p1.domain.usecase.DeleteCervezaUseCase
 import com.example.ramon_gonzalez_ap2_p1.domain.usecase.GetCervezaUseCase
-import com.example.ramon_gonzalez_ap2_p1.domain.usecase.SaveCervezaUseCase
+import com.example.ramon_gonzalez_ap2_p1.domain.usecase.UpsertCervezaUseCase
 import com.example.ramon_gonzalez_ap2_p1.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CervezaViewModel @Inject constructor(
-    private val saveUseCase: SaveCervezaUseCase,
+    private val upsertUseCase: UpsertCervezaUseCase,
     private val getUseCase: GetCervezaUseCase,
     private val deleteUseCase: DeleteCervezaUseCase,
     savedStateHandle: SavedStateHandle
@@ -76,18 +76,15 @@ class CervezaViewModel @Inject constructor(
 
         // Validaciones
         if (state.nombre.isBlank()) {
-            nombreErr = "El nombre es obligatorio"
-            isValid = false
+            nombreErr = "El nombre es obligatorio"; isValid = false
         }
         if (state.marca.isBlank()) {
-            marcaErr = "La marca es obligatoria"
-            isValid = false
+            marcaErr = "La marca es obligatoria"; isValid = false
         }
 
         val puntInt = state.puntuacion.toIntOrNull()
         if (puntInt == null || puntInt < 0 || puntInt > 10) {
-            puntuacionErr = "Debe ser un número entre 0 y 10"
-            isValid = false
+            puntuacionErr = "Debe ser un número entre 0 y 10"; isValid = false
         }
 
         if (!isValid) {
@@ -106,7 +103,7 @@ class CervezaViewModel @Inject constructor(
                     puntuacion = puntInt!!
                 )
 
-                saveUseCase(cerveza)
+                upsertUseCase(cerveza)
                 _uiState.update { it.copy(success = true) }
 
             } catch (e: Exception) {
