@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.Upsert
 import com.example.Ramon_Gonzalez_AP2_P1.local.entites.CervezaEntity
 import kotlinx.coroutines.flow.Flow
-
 @Dao
 interface CervezaDao{
     @Upsert

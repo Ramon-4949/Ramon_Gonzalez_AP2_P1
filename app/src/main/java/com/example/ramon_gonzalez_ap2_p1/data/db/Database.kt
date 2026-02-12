@@ -12,5 +12,7 @@ import com.example.Ramon_Gonzalez_AP2_P1.local.entites.CervezaEntity
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun CervezaDao(): CervezaDao
+
+
 }
 
