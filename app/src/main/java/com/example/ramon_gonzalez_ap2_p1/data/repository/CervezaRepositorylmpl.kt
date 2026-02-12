@@ -8,7 +8,6 @@ import com.example.Ramon_Gonzalez_AP2_P1.domain.registro.repository.CervezaRepos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-
 class CervezaRepositorylmpl @Inject constructor(
     private val dao: CervezaDao
 ) : CervezaRepository {
