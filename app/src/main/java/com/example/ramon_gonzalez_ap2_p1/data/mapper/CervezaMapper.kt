@@ -1,8 +1,8 @@
-package com.example.Ramon_Gonzalez_AP2_P1.data.mapper
+package com.example.ramon_gonzalez_ap2_p1.data.mapper
 
+import com.example.ramon_gonzalez_ap2_p1.domain.registro.model.Cerveza
+import com.example.ramon_gonzalez_ap2_p1.local.entites.CervezaEntity
 
-import com.example.Ramon_Gonzalez_AP2_P1.domain.registro.model.Cerveza
-import com.example.Ramon_Gonzalez_AP2_P1.local.entites.CervezaEntity
 fun CervezaEntity.toDomain() = Cerveza(
     id = id,
     nombre = nombre,

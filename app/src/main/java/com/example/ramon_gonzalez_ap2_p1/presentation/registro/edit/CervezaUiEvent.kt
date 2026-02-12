@@ -1,4 +1,4 @@
-package com.example.Ramon_Gonzalez_AP2_P1.presentation.registro.edit
+package com.example.ramon_gonzalez_ap2_p1.presentation.registro.edit
 
 sealed interface CervezaUiEvent {
     data class nombreChanged(val nombre: String) : CervezaUiEvent
