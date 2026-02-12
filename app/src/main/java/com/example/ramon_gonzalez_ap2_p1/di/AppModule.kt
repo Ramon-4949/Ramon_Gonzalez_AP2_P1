@@ -2,7 +2,7 @@ package com.example.ramon_gonzalez_ap2_p1.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.ramon_gonzalez_ap2_p1.data.db.AppDatabase
+import com.example.Ramon_Gonzalez_AP2_P1.data.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,12 +20,14 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "ParcialDb"
+            "Database"
         ).fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideBorrameDao(db: AppDatabase) = db.borrameDao()
+    fun provideCervezaDao(db: AppDatabase) = db.CervezaDao()
 }
+
+

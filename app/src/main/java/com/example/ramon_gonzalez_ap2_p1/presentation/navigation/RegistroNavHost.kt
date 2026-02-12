@@ -1,33 +1,33 @@
-package com.example.ramon_gonzalez_ap2_p1.presentation
+package com.example.ramon_gonzalez_ap2_p1.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import com.example.ramon_gonzalez_ap2_p1.presentation.navigation.Screen
-
 
 @Composable
-fun RegistroNavHost(
-    navController: NavHostController = rememberNavController()
+fun EntradaNavHost(
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.BorrameList
+        startDestination = Screen.CervezaList
     ) {
-        composable<Screen.BorrameList> {
-            ListScreen(
-                onNavigateToEdit = {
-                    navController.navigate(Screen.BorrameEdit(0))
+        // Pantalla Lista
+        composable<Screen.CervezaList> {
+            CervezaListScreen(
+                onNavigateToCreate = {
+                    navController.navigate(Screen.CervezaEdit(0))
+                },
+                onNavigateToEdit = { id ->
+                    navController.navigate(Screen.CervezaEdit(id))
                 }
             )
         }
-        composable<Screen.BorrameEdit> { backStackEntry ->
-            val args = backStackEntry.toRoute<Screen.BorrameEdit>()
 
-            EditScreen(
+        // Pantalla Editar
+        composable<Screen.CervezaEdit> {
+            EditCervezaScreen(
                 onNavigateBack = {
                     navController.navigateUp()
                 }
