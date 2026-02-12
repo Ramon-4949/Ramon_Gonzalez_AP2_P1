@@ -1,7 +1,11 @@
 package com.example.ramon_gonzalez_ap2_p1.di
+
 import android.content.Context
 import androidx.room.Room
-import com.example.Ramon_Gonzalez_AP2_P1.data.db.AppDatabase
+import com.example.ramon_gonzalez_ap2_p1.data.db.AppDatabase
+import com.example.ramon_gonzalez_ap2_p1.data.repository.CervezaRepositoryImpl
+import com.example.ramon_gonzalez_ap2_p1.domain.registro.repository.CervezaRepository
+import com.example.ramon_gonzalez_ap2_p1.local.dao.CervezaDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,14 +23,20 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "Database"
+            "CervezaDb.db"
         ).fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideCervezaDao(db: AppDatabase) = db.CervezaDao()
+    fun provideCervezaDao(db: AppDatabase): CervezaDao {
+        return db.CervezaDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCervezaRepository(dao: CervezaDao): CervezaRepository {
+        return CervezaRepositoryImpl(dao)
+    }
 }
-
-

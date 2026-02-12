@@ -1,9 +1,9 @@
-package com.example.Ramon_Gonzalez_AP2_P1.data.db
+package com.example.ramon_gonzalez_ap2_p1.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.Ramon_Gonzalez_AP2_P1.local.dao.CervezaDao
-import com.example.Ramon_Gonzalez_AP2_P1.local.entites.CervezaEntity
+import com.example.ramon_gonzalez_ap2_p1.local.dao.CervezaDao
+import com.example.ramon_gonzalez_ap2_p1.local.entites.CervezaEntity
 
 @Database(
     entities = [CervezaEntity::class],

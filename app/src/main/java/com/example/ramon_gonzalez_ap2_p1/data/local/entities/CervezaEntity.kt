@@ -1,4 +1,4 @@
-package com.example.Ramon_Gonzalez_AP2_P1.local.entites
+package com.example.ramon_gonzalez_ap2_p1.local.entites
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

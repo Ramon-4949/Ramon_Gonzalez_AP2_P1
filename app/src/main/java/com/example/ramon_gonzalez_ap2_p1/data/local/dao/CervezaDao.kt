@@ -1,10 +1,10 @@
-package com.example.Ramon_Gonzalez_AP2_P1.local.dao
+package com.example.ramon_gonzalez_ap2_p1.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import com.example.Ramon_Gonzalez_AP2_P1.local.entites.CervezaEntity
+import com.example.ramon_gonzalez_ap2_p1.local.entites.CervezaEntity
 import kotlinx.coroutines.flow.Flow
 @Dao
 interface CervezaDao{
